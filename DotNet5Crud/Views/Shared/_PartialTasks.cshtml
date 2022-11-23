@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DotNet5Crud.Models.CTask>
+
+<table class="m-table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nazwa</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Change Status</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var s in Model)
+        {
+            <tr class="view">
+                <td>@s.CTaskId</td>
+                <td>@s.Nazwa</td>
+                <td>@Convert.ToDateTime(s.DataW).ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@s.Status</td>
+                <td>
+                    <button type="button" data-toggle="modal" data-target="#iModalStatus"
+                            class="button-gray"
+                            data-whatever="User: TaskId: @s.CTaskId, Actual Status: @s.Status"
+                            onclick= "jSetParamToFormModal(@s.CTaskId, '@s.Status', '@s.Nazwa','@s.EmployeeId')"> 
+                        Change 
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

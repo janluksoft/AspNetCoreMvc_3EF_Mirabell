@@ -1,0 +1,52 @@
+﻿@model DotNet5Crud.Models.Employee
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Usuwanie Pracownika</h2>
+
+<p>Czy na pewno usunąć Pracownika?</p>
+<div class="container p-3 my-3 border">
+    <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Imie)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Imie)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Nazwisko)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Nazwisko)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Adres)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Adres)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Stanowisko)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Stanowisko)
+            </dd>
+        </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="EmployeeId" />
+                <input class="btn btn-primary" type="submit" value="Yes" />
+                <a class="btn btn-danger" asp-action="Index">No</a>
+            </form>
+
+ </div>

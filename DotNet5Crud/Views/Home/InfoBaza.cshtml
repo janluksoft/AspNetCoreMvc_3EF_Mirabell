@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Baza danych";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h3 class="display-5">Praca aplikacji z bazą danych</h3>
+
+    <p>
+        Aplikacja Mirabel pracuje w połączeniu z bazą danych MS SQL Server. <br />
+        Oczekuje, że na tym serwerze utworzone są już dwie tabele o właściwych strukturach: [Pracownicy] i [CTasks].
+        Należy zatem przed pierwszym połączeniem utworzyć te tabele.
+    </p>
+    <p>W celu poprawnej konfiguracji należy:</p>
+
+    <div style="padding: 2px 2px 2px 20px">
+        <li>Zalogować się do ‘SQL Server Managment Studio’;</li>
+        <li>Utworzyć tam pustą bazę (u mnie jest to ‘dbMark’);</li>
+
+        <li>Wczytać plik [Mirabell_SQL_Create_tables.sql] dla bazy. Znajduje się on w głównym katalogu aplikacji Mirabell, obok pliku [SMirabell8.sln];</li>
+        <li>
+            Uruchomić button [Execute]: serwer rozpocznie wykonywanie skryptu tworzącego dwie puste tabele;
+        </li>
+        <li>
+            Utworzą się dwie tabele oznaczone na rysunku czerwonymi kropkami;
+        </li>
+        <li>
+            W edytorze Visual Studio przejść do pliku [appsettings.json] jak pokazuje rysunek;
+        </li>
+        <li>W linijce „CompanyDB” zmienić ConnectionStrings jak pokazują kolorowe kropki na rysunku. Trzeba to zrobić indywidualnie, bo każdy serwer SQL znajduje się na innym komputerze u usera, każdy ma inny login i hasło;</li>
+    </div>
+    <p style="padding: 16px 4px 2px 2px">
+        Po powyższych działaniach przejście na zakładkę [Pracownicy] powinno odczytać pustą tabelę ‘Pracownicy’.
+    </p>
+    <p>
+        <img src="~/my/MS_SQL_Server_Create_tables_and_connection_string.png" style="margin-right:16px;" alt="Work">
+    </p>
+
+
+</div>

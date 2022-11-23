@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DotNet5Crud.Models.CTask>
+
+@{
+    ViewData["Title"] = "Index Tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- CTasks/index: -->
+<h2>Lista zadań</h2>
+
+<p style="text-align:right;margin-right:20px;">
+    <a class="btn btn-primary" asp-action="AddOrEdit">Dodaj zadanie</a>
+</p>
+
+<div class="table-responsive">
+
+    <table class="fold-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>@Html.DisplayNameFor(model => model.Nazwa)</th>
+                <th>@Html.DisplayNameFor(model => model.DataW)</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>Pracownik</th>
+                <th></th>
+                <th>Edit</th>
+                <th>Details</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="view">
+                    <td>@Html.DisplayFor(modelItem => item.CTaskId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nazwa)</td>
+                    <td>@Convert.ToDateTime(item.DataW).ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeId): @Html.DisplayFor(modelItem => item.Employee.Nazwisko)
+                    </td>
+                    <td></td>
+                    <td class="text-center">
+                        <a asp-action="AddOrEdit" class="btn btn-primary" style="padding: 3px 6px 3px 6px;"
+                           asp-route-CTaskId="@item.CTaskId">Edit</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Delete" class="btn btn-info" style="padding: 3px 6px 3px 6px;"
+                           asp-route-CTaskId="@item.CTaskId" asp-route-xDel="0" >Details</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Delete" class="btn btn-jdanger" 
+                           asp-route-CTaskId="@item.CTaskId" asp-route-xDel="1" >Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+</div>
+

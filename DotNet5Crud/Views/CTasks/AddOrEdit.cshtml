@@ -1,0 +1,60 @@
+﻿@model DotNet5Crud.ViewModels.CTaskCreateVM
+
+@{
+    ViewData["Title"] = "Create Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="form-title mt-3" style="padding: 1px;">@ViewBag.PageName</h2>
+            <hr>
+            <fieldset class="form-bg">
+                <form class="m-1 p-1" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+
+                        <div class="form-group">
+                            <label class="label-blue">Nazwa task-u</label>
+                            <input asp-for="Nazwa" class="form-control" />
+                            <span asp-validation-for="Nazwa" class="text-danger"></span>
+                        </div>
+
+                        <p class="label-blue">Date: <input asp-for="DataW" type="text" id="datepicker" width="300"></p> 
+
+                        <label class="label-blue">Status:</label>
+                        <select asp-for="Status" class="form-control" id="FormControlSelect0" style="padding: 1px;">
+                            <option>IN PROGRESS</option>
+                            <option>NEW</option>
+                            <option>TO SPECIFY</option>
+                            <option>REOPENED</option>
+                            <option>TO TEST</option>
+                            <option>COMPLETED</option>
+                            <option>CANCELED</option>
+                        </select>
+
+
+                        <label class="label-blue">Pracownik:</label>
+                        <select asp-for="SelectedEmployeeId" class="form-control" id="FormControlSelect1" style="padding: 1px;"
+                                asp-items="@(new SelectList(Model.Pracownicy.OrderBy(item => item.Nazwisko), "EmployeeId","Nazwisko"))">
+                            <option>Select</option>
+                        </select>
+
+
+                    </div>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <!-- <input class="btn btn-primary" type="submit" value="Save" /> -->
+                        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                        <a class="btn btn-danger" asp-action="Index">Cancel</a>
+
+                </form>
+
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+</div>
+

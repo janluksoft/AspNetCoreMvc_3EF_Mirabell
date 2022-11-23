@@ -1,0 +1,55 @@
+﻿@model DotNet5Crud.Models.CTask
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.PageName</h2>
+
+@if (@ViewBag.IsEdit)
+{
+    <p>Czy na pewno usunąć Task?</p>
+}
+
+<div class="container p-3 my-3 border">
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nazwa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataW)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataW)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeId)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CTaskId" />
+
+        @if (@ViewBag.IsEdit)
+        {
+            <input class="btn btn-primary" type="submit" value="Yes" />
+        }
+
+        <a class="btn btn-danger" asp-action="Index">Cancel</a>
+    </form>
+
+</div>

@@ -1,0 +1,235 @@
+﻿@model IEnumerable<DotNet5Crud.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index Employees";
+    ViewBag.Title = "Index Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Employee/index -->
+<h2>Lista Pracowników</h2>
+
+<p style="text-align:right;margin-right:20px;">
+    <a class="btn btn-primary" asp-action="AddOrEdit">Dodaj pracownika</a>
+</p>
+
+<div class="table-responsive">
+
+    <table class="fold-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>@Html.DisplayNameFor(model => model.Imie)</th>
+                <th>@Html.DisplayNameFor(model => model.Nazwisko)</th>
+                <th>@Html.DisplayNameFor(model => model.Adres)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Stanowisko)</th>
+                <th></th>
+                <th>Edit</th>
+                <th>Details</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr class="view">
+                    <td>@Html.DisplayFor(modelItem => employee.EmployeeId)</td>
+                    <td>@Html.DisplayFor(modelItem => employee.Imie)</td>
+                    <td>@Html.DisplayFor(modelItem => employee.Nazwisko)</td>
+                    <td>@Html.DisplayFor(modelItem => employee.Adres)</td>
+                    <td>@Html.DisplayFor(modelItem => employee.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => employee.Stanowisko)</td>
+                    <td></td>
+                    <td class="text-center">
+                        <a asp-action="AddOrEdit" class="btn btn-primary" style="padding: 3px 6px 3px 6px;"
+                           asp-route-employeeId="@employee.EmployeeId">Edit</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Details" class="btn btn-info" style="padding: 3px 6px 3px 6px;"
+                           asp-route-employeeId="@employee.EmployeeId">Details</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Delete" class="btn btn-jdanger" asp-route-employeeId="@employee.EmployeeId">Delete</a>
+                    </td>
+                </tr>
+
+                <tr class="fold">
+                    <td colspan="8">
+                        <p style=" margin: 0px; padding: 1px 2px 2px 40px;">Zadania dla: @employee.Imie @employee.Nazwisko</p>
+                        <div class="fold-content" id="iCt-@employee.EmployeeId"
+                             style=" margin: 0px; padding: 1px;">
+                            <!-- @@Html.Partial("_PartialTasks", employee.CTasks) -->
+                            <partial name="_PartialTasks" model="@employee.CTasks" />
+                        </div>
+                    </td>
+                </tr>
+
+
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<!-- ------- FORM MODAL --------------- -->
+<div class="modal fade" id="iModalStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label id="ilab-info">Info</label><br />
+                        <label id="ilab-sel">Zmień Status na:</label>
+                        <select class="form-control" id="sel0">
+                            <option value="">Please select</option>
+                            <option value="India">India</option>
+                            <option value="China">China</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="jSaveChanges()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/my/status.js"></script> <!-- Nowy -->
+
+@if (Model != null)
+{
+    <script type="text/javascript">
+        $(function () {
+            alert("Inserted Customer ID: ");
+        });
+    </script>
+}
+
+<!-- -------------------- Java Scripts -------------------- -->
+@section Scripts{
+
+
+    <script type="text/javascript">
+
+        function SendViaPost(xIntId, xTxtStatus) {
+            $.post("/CTasks/ChangeStatus", { xId: xIntId, xStatus: xTxtStatus },
+                function (data) {
+                    //const info = document.getElementById('ilab-info').textContent;
+                    //alert(info + "\rZmieniono na: " + data);
+                }
+            );
+
+        };
+    </script>
+
+    <script type="text/javascript">
+
+        function GetDivViaPost(xIntId, xTxtStatus) {
+            $.get("/CTasks/TasksForEmployee", { xId: xIntId, xStatus: xTxtStatus },
+                function (data) {
+                    const iDiv = "iCt-" + "11";  //f xIntEmployeeId; //np 'iCt-6'
+                    alert("GetDivViaPost1: " + iDiv + " data: " + data);
+
+
+                    let adiv = document.getElementById(iDiv);
+                    adiv.textContent = "Dane wpisujemy";
+                    alert("\rZmieniono na: ");
+                }
+            );
+        };
+    </script>
+
+    <script type="text/javascript">
+
+        // refresh widoku cześciowego przez wpisanie go ponowne do <div id="iCt-nnn"></div>
+        function SendToControllerStatus(xIntId) {
+
+            alert("Zmiana wykonana");
+
+            $.ajax({
+                type: 'GET',
+                url: '/CTasks/_PartialTasks',  //Metoda akcji kontrolera
+                data: { xId: xIntId },
+                //contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (response) {
+
+                    const iDiv = "iCt-" + xIntId;  //np 'iCt-6'
+
+                    let adiv = document.getElementById(iDiv); //Object <div>
+
+                    adiv.innerHTML = response;  //"Dane z Ajax z kontrolera wpisujemy do <div> ";
+                },
+
+                failure: function (response) {
+                    alert("Faliure: " + response.responseText);
+                },
+
+                error: function (response) {
+                    alert("Error: " + response.responseText);
+                    alert("Error: " + response.statusText);
+                    const iDiv = "iCt-" + xIntId;
+                    alert("GetDivViaPost1: " + iDiv);
+                }
+            });
+        };
+    </script>
+
+    <script type="text/javascript">
+
+        let pIntId;
+        let pTxtStatus;
+        let pTxtTaskName;
+        let pIntEmployeeId;
+
+        function jSetParamToFormModal(xIntId, xTxtStatus, xTxtTaskName, xIntEmployeeId) {
+
+            pIntId = xIntId;
+            pTxtStatus = xTxtStatus;
+            pTxtTaskName = xTxtTaskName;
+            pIntEmployeeId = xIntEmployeeId;
+
+            const aTxtInfo = "Task-Id: " + pIntId + "  Status: " + pTxtStatus + "  Emp-Id: " + pIntEmployeeId;
+
+            jTypeTxtToElementId('ilab-info', aTxtInfo);
+            jDropDown_TypeSpecjalRowsToSelect('sel0', xTxtStatus);
+        };
+
+        function jSaveChanges() {
+
+            let aTxtStatus = jDropDown_ReadActualSelect('sel0');
+            SendViaPost(pIntId, aTxtStatus);
+
+            SendToControllerStatus(pIntEmployeeId);
+        };
+
+        function jTestElementId(xIdElement) {
+            alert("bStart: " + xIdElement);
+            const parent = document.getElementById(xIdElement);
+            alert("Jest: " + parent);
+            if (parent) {
+                alert("Jest2: " + parent);
+                parent.textContent = 'Napis7';
+            }
+        }
+
+
+    </script>
+
+    <script type="text/javascript">
+        $('#iModalStatus').on('show.bs.modal',
+            function (event) {
+                let button = $(event.relatedTarget); // Button that triggered the modal
+                let txtInfo = button.data('whatever'); // Extract info from data-* attributes
+            }
+        )
+    </script>
+
+} <!-- End section Scripts -->

@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+
+    <table border="0">
+        <tr>
+            <td width="80">
+                <img src="~/my/Task_for_worker.png" height="60" style="margin-right:16px;" alt="">
+            </td>
+            <td>
+                <h1 class="display-5">MIRABELL</h1>
+            </td>
+        </tr>
+    </table>
+
+    <p> Aplikacja do zarządzania zadaniami pracowników.</p>
+    <p>
+        <img src="~/my/Work_all.jpg" style="margin-right:16px;" alt="Work">
+    </p>
+
+    <p style="font-size: 12px; color:gray;">Author: JanLukSoft<br />a-mail: janluksoft@interia.pl</p>
+
+    <a asp-action="InfoBaza"><h4>Baza danych aplikacji</h4></a>
+    <p>
+        Aplikacja internetowa ‘Mirabell’ operuje na bazie danych MS-SQL. Niniejsza informacyjna strona nie inicjuje jeszcze połączenia z bazą danych. Jednak przed przejściem na kolejne strony należy skonfigurować połączenie z bazą i utworzyć w niej ‘ręcznie’ dwie tabele.<br />
+        <a asp-action="InfoBaza">Tutaj</a> można zapoznać się z konfiguracją i uruchomieniem połączenia.
+
+    </p>
+
+</div>
