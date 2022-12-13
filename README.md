@@ -45,12 +45,24 @@ The Model-View-Controller (MVC) architectural pattern separates an application i
 
 Above shows the diagram the three main components and which ones reference the others.
 
+## Creating tables in MS-SQL 
+
+The Mirabel application works with the MS SQL Server database. For proper operation it requires: 
+- Creating two tables on MS-SQL: [Pracownicy] and [CTasks]; 
+- You typed a good ConnectionString; 
+
+Two tables need to be created and run 'SQL Server Management Studio' and run the script from [\DotNet5Crud\Mirabell_SQL_Create_tables.sql]. It will create two tables; 
+Next, enter the ConnectionString data into [appsettings.json] as shown in the figure below:
+
+![](/DotNet5Crud/wwwroot/my/MS_SQL_Server_Create_tables_and_connection_string.png)
+
+
 ## Details
 
 - Environment: VS2019
 - Target: .NET5 (Core)
 - Output type: Web Application
-- ASP.NET Core MVC
+- ASP.NET Core MVC Entity Framework
 
 
 
